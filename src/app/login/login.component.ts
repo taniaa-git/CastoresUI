@@ -36,8 +36,8 @@ export class LoginComponent {
     private bootstrapService: BootstrapService // Opcional para notificaciones
   ) {
     this.loginForm = this.fb.group({
-      username: ['tania', Validators.required],
-      password: ['1234', Validators.required]
+      username: [''],
+      password: ['']
     });
   }
 
