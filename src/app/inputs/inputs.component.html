@@ -1,0 +1,74 @@
+<div class="container">
+    <div class="table-wrapper">
+        <div class="table-title">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h2>Gestión de <b>Entradas </b></h2>
+                    <p>Selecciona el producto y la cantidad a ingresar del inventario</p>
+                </div>
+
+            </div>
+        </div>
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Agregar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let product of activeProducts">
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.quantity }}</td>
+                    <td>
+                        <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#addQuantityModal" (click)="openModal(product)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-circle-dashed-plus">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M8.56 3.69a9 9 0 0 0 -2.92 1.95" />
+                                <path d="M3.69 8.56a9 9 0 0 0 -.69 3.44" />
+                                <path d="M3.69 15.44a9 9 0 0 0 1.95 2.92" />
+                                <path d="M8.56 20.31a9 9 0 0 0 3.44 .69" />
+                                <path d="M15.44 20.31a9 9 0 0 0 2.92 -1.95" />
+                                <path d="M20.31 15.44a9 9 0 0 0 .69 -3.44" />
+                                <path d="M20.31 8.56a9 9 0 0 0 -1.95 -2.92" />
+                                <path d="M15.44 3.69a9 9 0 0 0 -3.44 -.69" />
+                                <path d="M9 12h6" />
+                                <path d="M12 9v6" />
+                            </svg>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal para agregar cantidad -->
+<div class="modal fade" id="addQuantityModal" tabindex="-1" aria-labelledby="addQuantityModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <form [formGroup]="editForm" (ngSubmit)="updateQuantity()">
+          <div class="modal-header bg-info text-white">
+            <h5 class="modal-title" id="addQuantityModalLabel">Agregar cantidad</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+  
+          <div class="modal-body">
+            <label class="form-label">Cantidad a agregar</label>
+            <input type="number" class="form-control" formControlName="quantity" required min="1">
+            <span *ngIf="editForm.get('quantity')?.invalid && editForm.get('quantity')?.touched"
+              class="text-danger small">Por favor ingresa una cantidad válida (mayor a 0).</span>
+          </div>
+  
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-info" [disabled]="editForm.invalid">Guardar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>

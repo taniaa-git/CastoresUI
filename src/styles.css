@@ -1,0 +1,28 @@
+/* En tu archivo styles.css global */
+@import "primeicons/primeicons.css";
+@font-face {
+  font-family: "Sans";
+  src: local("Sans"), url(./assets/OpenSans-VariableFont_wdth\,wght.ttf) format("truetype");
+}
+
+
+body {
+  padding: 0px;
+  margin: 0px;
+  width: 100%;
+  height: 100vh;
+  background-color: #faf5f5;
+  color: #848484;
+  font-family: 'Sans', serif;
+}
+:root {
+    --primary-color: #6366F1; /* Color principal del tema Aura */
+    --surface-ground: #f8f9fa; /* Fondo de la página */
+  }
+  
+  .login-box {
+    background: var(--surface-card); /* Usa variables del tema */
+    border: 1px solid var(--surface-border);
+  }
+
+  

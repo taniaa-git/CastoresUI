@@ -1,0 +1,37 @@
+body {
+    color: #566787;
+    background: #f5f5f5;
+    font-family: 'Varela Round', sans-serif;
+    font-size: 13px;
+}
+.table-wrapper {
+    background: #fff;
+    padding: 20px 25px;
+    margin: 30px 0;
+    border-radius: 3px;
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+
+.table-title p {
+    padding-bottom: 50px; 
+}
+
+.btn-outline-danger{
+    float: center;
+    border: #fff;
+    padding: 0px;
+}
+
+.btn {
+    float: center;
+    border: #fff;
+    padding: 5px;
+    border-radius: 10px;
+    align-items: center;
+}
+
+td, th {
+    text-align: center;
+    vertical-align: middle;
+}
+

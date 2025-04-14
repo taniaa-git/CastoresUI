@@ -1,0 +1,67 @@
+
+<div class="login-container d-flex justify-content-center align-items-center min-vh-100 bg-light">
+  <div class="login-box bg-white p-4 rounded shadow-sm" style="width: 100%; max-width: 400px;">
+    <div class="text-center mb-4">
+      <h2>Iniciar Sesión</h2>
+      <p class="text-muted">Ingresa tus credenciales para continuar</p>
+    </div>
+
+    <!-- Mensaje de error general -->
+    <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show">
+      {{ errorMessage }}
+      <button type="button" class="btn-close" (click)="errorMessage = ''"></button>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="login()" class="needs-validation" novalidate>
+      <!-- Campo Usuario -->
+      <div class="mb-3">
+        <label for="username" class="form-label">Usuario</label>
+        <input id="username" type="text" class="form-control" formControlName="username"
+          placeholder="Ingresa tu usuario"
+          [class.is-invalid]="loginForm.get('username')?.invalid && loginForm.get('username')?.touched"
+          [disabled]="loading">
+        <div *ngIf="loginForm.get('username')?.invalid && loginForm.get('username')?.touched" class="invalid-feedback">
+          Usuario es requerido
+        </div>
+      </div>
+
+      <!-- Campo Contraseña -->
+      <div class="mb-3">
+        <label for="password" class="form-label">Contraseña</label>
+        <div class="input-group">
+          <input id="password" [type]="showPassword ? 'text' : 'password'" class="form-control"
+            formControlName="password" placeholder="Ingresa tu contraseña"
+            [class.is-invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+            [disabled]="loading">
+          <button class="btn btn-outline-secondary" type="button" (click)="togglePasswordVisibility()"> 
+            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-eye-closed"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M21 9c-2.4 2.667 -5.4 4 -9 4c-3.6 0 -6.6 -1.333 -9 -4" /><path d="M3 15l2.5 -3.8" /><path d="M21 14.976l-2.492 -3.776" /><path d="M9 17l.5 -4" /><path d="M15 17l-.5 -4" /></svg>
+            <i class="bi" [class.bi-eye]="showPassword" [class.bi-eye-slash]="!showPassword"></i>
+          </button>
+        </div>
+        <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="invalid-feedback">
+          Contraseña es requerida
+        </div>
+      </div>
+
+      <!-- Recordar contraseña (opcional) -->
+      <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" id="rememberMe">
+        <label class="form-check-label" for="rememberMe">Recordar mi usuario</label>
+      </div>
+
+      <!-- Botón Submit -->
+      <button type="submit" class="btn btn-primary w-100 mb-3" [disabled]="loginForm.invalid || loading">
+        <span *ngIf="!loading">Ingresar</span>
+        <span *ngIf="loading" class="d-flex align-items-center justify-content-center">
+          <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+          Procesando...
+        </span>
+      </button>
+
+      <!-- Enlace de ayuda (opcional) -->
+      <div class="text-center">
+        <a href="#" class="text-decoration-none">¿Olvidaste tu contraseña?</a>
+      </div>
+    </form>
+  </div>
+</div>

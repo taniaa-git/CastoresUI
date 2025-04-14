@@ -1,0 +1,9 @@
+td, th {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.align-right {
+    justify-content: flex-end;
+    display: flex;
+}

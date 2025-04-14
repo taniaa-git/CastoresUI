@@ -1,0 +1,64 @@
+<div class="d-flex flex-column vh-100">
+  <!-- Top Bar -->
+  <header class="d-flex align-items-center justify-content-between px-4 py-3 bg-primary text-white shadow-sm">
+    <div class="d-flex align-items-center">
+      <button class="btn btn-link text-white me-3 p-0 d-md-none" (click)="toggleMenu()">
+        <i class="pi pi-bars fs-4"></i>
+      </button>
+      <h1 class="h5 mb-0">{{ appTitle }}</h1>
+    </div>
+    <!-- Dropdown usuario -->
+    <div class="dropdown">
+      <button class="btn text-white dropdown-toggle shadow-sm" type="button" data-bs-toggle="dropdown"
+        aria-expanded="false" style="background-color: #2e83ebf3; border: none;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"
+          class="icon icon-tabler icons-tabler-filled icon-tabler-user">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path d="M12 2a5 5 0 1 1 -5 5l.005 -.217a5 5 0 0 1 4.995 -4.783z" />
+          <path d="M14 14a5 5 0 0 1 5 5v1a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-1a5 5 0 0 1 5 -5h4z" />
+        </svg>
+        {{ username }}
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end">
+        <li><span class="dropdown-item-text"><strong>Rol:</strong> {{ role }}</span></li>
+        <li>
+          <hr class="dropdown-divider" />
+        </li>
+        <li><a class="dropdown-item text-danger" href="#" (click)="logout()">Cerrar sesión</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <div class="d-flex flex-grow-1 overflow-hidden position-relative">
+    <!-- Sidebar -->
+    <aside class="sidebar bg-light border-end shadow-sm p-3 vh-100"
+      [ngClass]="{ 'sidebar-open': menuOpen, 'sidebar-closed': !menuOpen }"
+      style="width: 250px; transition: all 0.3s ease;">
+      <h5 class="mb-4 text-primary text-center">Panel de control</h5>
+      <nav class="nav flex-column gap-2">
+        <a class="nav-link d-flex align-items-center px-3 py-2 rounded text-dark fw-semibold hover-effect"
+          (click)="navigateTo('inventory')" *ngIf="role === 'ROLE_WAREHOUSE' || role === 'ROLE_ADMIN'">
+          <i class="bi bi-box-seam me-2"></i> Inventario
+        </a>
+        <a class="nav-link d-flex align-items-center px-3 py-2 rounded text-dark fw-semibold hover-effect"
+        (click)="navigateTo('inputs')" *ngIf="role === 'ROLE_ADMIN'">
+          <i class="bi bi-box-seam me-2"></i> Entradas
+        </a>
+        <a class="nav-link d-flex align-items-center px-3 py-2 rounded text-dark fw-semibold hover-effect"
+          (click)="navigateTo('outputs')" *ngIf="role === 'ROLE_WAREHOUSE'">
+          <i class="bi bi-box-arrow-up-right me-2"></i> Salidas
+        </a>
+        <a class="nav-link d-flex align-items-center px-3 py-2 rounded text-dark fw-semibold hover-effect"
+          (click)="navigateTo('history')" *ngIf="role === 'ROLE_ADMIN'">
+          <i class="bi bi-clock-history me-2"></i> Historial
+        </a>
+      </nav>
+    </aside>
+
+
+    <!-- Main Content -->
+    <main class="flex-grow-1 p-4 overflow-auto bg-light">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

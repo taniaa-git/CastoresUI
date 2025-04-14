@@ -1,0 +1,109 @@
+<div class="container">
+  <div class="table-wrapper">
+    <div class="table-title">
+      <div class="row">
+        <div class="col-sm-6">
+          <h2>Gestión de <b>Inventario </b></h2>
+          <p>Aquí puedes consultar todos los productos del inventario, agregar nuevos, actualizar cantidades o cambiar
+            su estado</p>
+        </div>
+        <div class="col-sm-6">
+          <button *ngIf="role === 'ROLE_ADMIN'" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addProductModal">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="icon icon-tabler icons-tabler-outline icon-tabler-circle-dashed-plus">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M8.56 3.69a9 9 0 0 0 -2.92 1.95" />
+              <path d="M3.69 8.56a9 9 0 0 0 -.69 3.44" />
+              <path d="M3.69 15.44a9 9 0 0 0 1.95 2.92" />
+              <path d="M8.56 20.31a9 9 0 0 0 3.44 .69" />
+              <path d="M15.44 20.31a9 9 0 0 0 2.92 -1.95" />
+              <path d="M20.31 15.44a9 9 0 0 0 .69 -3.44" />
+              <path d="M20.31 8.56a9 9 0 0 0 -1.95 -2.92" />
+              <path d="M15.44 3.69a9 9 0 0 0 -3.44 -.69" />
+              <path d="M9 12h6" />
+              <path d="M12 9v6" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Precio</th>
+          <th>Status</th>
+          <th>Cantidad</th>
+          <th *ngIf="role === 'ROLE_ADMIN'">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of allProducts">
+          <td>{{ product.name }}</td>
+          <td>{{ product.description }}</td>
+          <td>${{ product.price }}</td>
+          <td>
+            <span class="badge" [ngClass]="product.deletedAt ? 'bg-secondary' : 'bg-success'">
+              {{ product.deletedAt ? 'Inactivo' : 'Activo' }}
+            </span>
+          </td>
+          <td>
+            <span>{{ product.quantity }}</span>
+          </td>
+          <td *ngIf="role === 'ROLE_ADMIN'">
+            <button *ngIf="!product.deletedAt"
+                    class="btn btn-outline-danger btn-sm"
+                    (click)="toggleProductStatus(product.id)">
+              <i class="bi bi-x-circle"></i> Desactivar
+            </button>
+          
+            <button *ngIf="product.deletedAt"
+                    class="btn btn-outline-success btn-sm"
+                    (click)="toggleProductStatus(product.id)">
+              <i class="bi bi-check-circle"></i> Activar
+            </button>
+          </td>
+          
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <form [formGroup]="productForm" (ngSubmit)="createProduct()">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title" id="addProductModalLabel">Agregar nuevo producto</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+
+        <div class="modal-body">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Nombre</label>
+              <input type="text" class="form-control" formControlName="name" placeholder="Nombre del producto" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Descripción</label>
+              <input type="text" class="form-control" formControlName="description" placeholder="Descripción corta"
+                required>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Precio</label>
+              <input type="number" class="form-control" formControlName="price" placeholder="$0.00" required>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-success">Guardar producto</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

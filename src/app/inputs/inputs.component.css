@@ -1,0 +1,12 @@
+.btn {
+    float: center;
+    border: #fff;
+    padding: 5px;
+    border-radius: 10px;
+    align-items: center;
+}
+
+td, th {
+    text-align: center;
+    vertical-align: middle;
+}

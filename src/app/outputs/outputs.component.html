@@ -1,0 +1,80 @@
+<div class="container">
+  <div class="table-wrapper">
+    <div class="table-title">
+      <div class="row">
+        <div class="col-sm-12">
+          <h2>Gestión de <b>Salidas </b></h2>
+          <p>Selecciona el producto y la cantidad a retirar del inventario</p>
+        </div>
+
+      </div>
+    </div>
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Cantidad</th>
+          <th>Eliminar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of activeProducts">
+          <td>{{ product.name }}</td>
+          <td>{{ product.quantity }}</td>
+          <td>
+            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+              data-bs-target="#substractQuantityModal" (click)="openModal(product)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="icon icon-tabler icon-tabler-edit">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+                <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
+                <path d="M16 5l3 3" />
+              </svg>
+            </button>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="substractQuantityModal"tabindex="-1" aria-labelledby="substractQuantityModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <form [formGroup]="editForm" (ngSubmit)="updateQuantity()">
+        <div class="modal-header bg-danger text-white">
+          <h5 class="modal-title">Retirar productos</h5>
+        </div>
+        <div class="modal-body">
+          <label class="form-label">Cantidad a retirar</label>
+          <input type="number" class="form-control" formControlName="quantity" />
+        
+          <div class="text-muted mt-1">Cantidad disponible: {{ availableQuantity }}</div>
+        
+          <span *ngIf="editForm.get('quantity')?.errors?.['required'] && editForm.get('quantity')?.touched"
+            class="text-danger small">
+            Este campo es obligatorio.
+          </span>
+        
+          <span *ngIf="editForm.get('quantity')?.errors?.['min'] && editForm.get('quantity')?.touched"
+            class="text-danger small">
+            La cantidad debe ser al menos 1.
+          </span>
+        
+          <span *ngIf="editForm.get('quantity')?.errors?.['max'] && editForm.get('quantity')?.touched"
+            class="text-danger small">
+            No puedes retirar más de la cantidad disponible.
+          </span>
+        </div>        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-danger">Confirmar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

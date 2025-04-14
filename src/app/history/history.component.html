@@ -1,0 +1,49 @@
+<div class="container">
+    <div class="table-wrapper">
+        <div class="table-title">
+            <div class="row">
+                <div class="col-sm-8">
+                    <h2> <b>Historial </b></h2>
+                    <p>Consulta los movimientos recientes de productos en el inventario.</p>
+                </div>
+                <div class="col-sm-4">
+                    <label for="actionFilter" class="form-label">Filtrar por acción:</label>
+                    <select id="actionFilter" class="form-select" [(ngModel)]="selectedAction">
+                        <option value="">Todas</option>
+                        <option value="ADD">Entrada</option>
+                        <option value="SUBSTRACT">Salida</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Acción</th>
+                    <th>Cantidad</th>
+                    <th>Usuario</th>
+                    <th>Fecha</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let log of warehouseLogs | filterByAction:selectedAction">
+                    <td>{{ log.product.name }}</td>
+                    <td>
+                        <span class="badge" [ngStyle]="{
+                            'background-color': log.action === 'ADD' ? '#198754' : '#dc3545',
+                            'color': 'white'
+                          }">
+                            {{ log.action === 'ADD' ? 'Entrada' : 'Salida' }}
+                        </span>
+                    </td>
+                    <td>{{ log.quantity }}</td>
+                    <td>{{ log.user.username }}</td>
+                    <td>{{log.transactionDate | date: 'short' }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
